@@ -22,6 +22,9 @@ BPFSO = -lbpf
 clean:
 	rm -f *.o *.so $(EXECABLE)
 
+clean-everything: clean
+	vagrant destroy -f
+
 build: ${BPFCODE.c} ${BPFLOADER}
 	$(CLANG) -O2 -target bpf -c $(BPFCODE:=.c) $(CCINCLUDE) -o ${BPFCODE:=.o}
 
@@ -32,22 +35,3 @@ bpfload: build
 $(EXECABLE): bpfload
 
 .DEFAULT_GOAL := $(EXECABLE)
-
-
-
-# TOOLS=../../../tools
-# INCLUDE=../../../libbpf/include
-# HEADERS=../../../libbpf/src
-
-# all: loader hello
-
-# hello:
-# 	clang -O2 -target bpf -c bpf_program.c -o bpf_program.o
-
-# loader:
-# 	clang -o loader -l elf \
-# 		-I$(INCLUDE) \
-# 		-I$(HEADERS) \
-# 		-I$(TOOLS) \
-# 		$(TOOLS)/bpf_load.c \
-# 		loader.c

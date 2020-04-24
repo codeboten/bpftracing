@@ -9,5 +9,6 @@ Experiments with BPF and tracing
 ```bash
 vagrant up
 vagrant ssh
+cd /vagrant
 make
 ```
